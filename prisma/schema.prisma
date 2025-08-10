@@ -20,8 +20,9 @@ model User {
   displayname      String
   username         String   @unique
   location         String?
-  college          String?
-  occupation       String?
+  college          String
+  experience       String?
+  occupation       String
   password         String
   purchasedCourses Course[] @relation("Purchases")
   createdCourses   Course[] @relation("CreatedCourses")

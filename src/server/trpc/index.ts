@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { Publicprocedure, router} from "./trpc";
+import { Publicprocedure,Router} from "./trpc";
 import { CreatorRouter } from "../routers/creatorRouter";
 
-export const appRouter = router({
+export const appRouter = Router({
   creator: CreatorRouter
 });
 
