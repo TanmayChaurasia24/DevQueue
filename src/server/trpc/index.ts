@@ -1,13 +1,9 @@
 import { z } from "zod";
 import { Publicprocedure, router} from "./trpc";
+import { CreatorRouter } from "../routers/creatorRouter";
 
 export const appRouter = router({
-  hello: Publicprocedure
-    .input(z.object({ name: z.string() }))
-    .mutation(({ input }) => {
-      console.log("input from frontend to backend is: ", input);
-      return { greeting: `Hello, ${input.name}!` };
-    }),
+  creator: CreatorRouter
 });
 
 export type AppRouter = typeof appRouter;

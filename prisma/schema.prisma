@@ -15,18 +15,49 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  createdAt DateTime @default(now())
-  courses   Course[]
+  id               String   @id @default(cuid())
+  email            String   @unique
+  displayname      String
+  username         String   @unique
+  location         String?
+  college          String?
+  occupation       String?
+  password         String
+  purchasedCourses Course[] @relation("Purchases")
+  createdCourses   Course[] @relation("CreatedCourses")
+  createdAt        DateTime @default(now())
 }
 
 model Course {
-  id          String   @id @default(cuid())
-  title       String
-  description String
-  authorId    String
-  author      User     @relation(fields: [authorId], references: [id])
-  createdAt   DateTime @default(now())
+  id                 String          @id @default(cuid())
+  title              String
+  description        String
+  duration           String
+  rating             Float?          @default(0.0)
+  alreadyEnrolled    Int?            @default(0)
+  price              Decimal         @default(0.0)
+  availableLanguages String[]
+  courseLevel        CourseLevel     @default(Beginner)
+  skillsToGain       String[]
+  authorId           String
+  author             User            @relation("CreatedCourses", fields: [authorId], references: [id])
+  purchasers         User[]          @relation("Purchases")
+  modules            CourseModules[] @relation("Modules")
+  createdAt          DateTime        @default(now())
+}
+
+model CourseModules {
+  id             String   @id @default(cuid())
+  title          String
+  description    String
+  skillsWillGain String[]
+  duration       String
+  courseId       String
+  course         Course   @relation("Modules", fields: [courseId], references: [id])
+}
+
+enum CourseLevel {
+  Beginner
+  Intermediate
+  Advanced
 }
